@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'estoque/css/estoque.css' %}">
+
+{% block 'dashboard' %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Simples</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Estoque</h1>
+
+    <div>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="number" id="quantidade" placeholder="Quantidade">
+        <input type="number" id="valor" placeholder="Valor">
+        <button id="adicionar">Adicionar Item</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th>Data de Adição</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody id="estoque">
+            <!-- Itens do estoque serão adicionados aqui dinamicamente -->
+        </tbody>
+    </table>
+    <script src="{% static 'estoque/js/estoque.js' %}"></script>
+</body>
+</html>
+{% endblock %}
+
