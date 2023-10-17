@@ -1,8 +1,3 @@
-@use postcss-preset-env {
-  stage: 0;
-}
-
-/* config.css */
 
 :root {
   --baseColor: #606468;
@@ -154,9 +149,9 @@ input[type="submit"] {
 
   --loginLabelBackgroundColor: #363b41;
 
-  --loginSubmitBackgroundColor: #ea4c88;
+  --loginSubmitBackgroundColor: #3539ff;
   --loginSubmitColor: #eee;
-  --loginSubmitHoverBackgroundColor: #d44179;
+  --loginSubmitHoverBackgroundColor: #898bff;
 }
 
 .login {

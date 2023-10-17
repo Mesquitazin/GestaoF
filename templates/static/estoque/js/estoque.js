@@ -1,50 +1,69 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const adicionarBtn = document.getElementById("adicionar");
-    const nomeInput = document.getElementById("nome");
-    const quantidadeInput = document.getElementById("quantidade");
-    const valorInput = document.getElementById("valor");
-    const estoqueTable = document.getElementById("estoque");
+    const estoqueTable = document.querySelector("#estoque tbody");
 
-    let nextRowId = 1; // ID inicial para as linhas
-
-    adicionarBtn.addEventListener("click", function () {
-        const nome = nomeInput.value;
-        const quantidade = quantidadeInput.value;
-        const valor = valorInput.value;
-
+    const itemForm = document.querySelectorAll(".adicionar");
+    itemForm.forEach(function (add_button) {
+    add_button.addEventListener("click", function () {
+        const nome = document.getElementById("nome").value;
+        const quantidade = document.getElementById("quantidade").value;
+        const valor = document.getElementById("valor").value;
+        
         if (nome && quantidade && valor) {
-            const dataAdicao = new Date().toLocaleString();
-            const newRow = estoqueTable.insertRow();
-            newRow.id = `row-${nextRowId}`; // Definindo um ID único para a linha
-            nextRowId++;
-
-            const cellNome = newRow.insertCell(0);
-            const cellQuantidade = newRow.insertCell(1);
-            const cellValor = newRow.insertCell(2);
-            const cellData = newRow.insertCell(3);
-            const cellAcao = newRow.insertCell(4);
-
-            cellNome.innerHTML = nome;
-            cellQuantidade.innerHTML = quantidade;
-            cellValor.innerHTML = valor;
-            cellData.innerHTML = dataAdicao;
-
-            const removerBtn = document.createElement("button");
-            removerBtn.textContent = "Remover";
-            removerBtn.addEventListener("click", function () {
-                // Obtenha o ID da linha a partir do botão de remover
-                const rowIndex = newRow.id;
-                const rowToRemove = document.getElementById(rowIndex);
-                estoqueTable.deleteRow(rowToRemove.rowIndex);
-            });
-
-            cellAcao.appendChild(removerBtn);
-
-            nomeInput.value = "";
-            quantidadeInput.value = "";
-            valorInput.value = "";
-        } else {
-            alert("Preencha todos os campos para adicionar um item.");
+            adicionarItem(nome, quantidade, valor);
+            limparCampos();
         }
+
+        });
     });
+    
+    function adicionarItem(nome, quantidade, valor) {
+        const newRow = estoqueTable.insertRow();
+        newRow.innerHTML = `
+            <td>${nome}</td>
+            <td>${quantidade}</td>
+            <td>${valor}</td>
+            <td>
+                <button class="editar">Editar</button>
+                <button class="excluir">Excluir</button>
+            </td>
+        `;
+
+        const editarButtons = document.querySelectorAll(".editar");
+        editarButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                editarItem(button);
+            });
+        });
+
+        const excluirButtons = document.querySelectorAll(".excluir");
+        excluirButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                excluirItem(button);
+            });
+        });
+    }
+    
+    function editarItem(button) {
+        const row = button.parentNode.parentNode;
+        const nome = row.cells[0].textContent;
+        const quantidade = row.cells[1].textContent;
+        const valor = row.cells[2].textContent;
+        
+        document.getElementById("nome").value = nome;
+        document.getElementById("quantidade").value = quantidade;
+        document.getElementById("valor").value = valor;
+        
+        row.parentNode.removeChild(row);
+    }
+    
+    function excluirItem(button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+    
+    function limparCampos() {
+        document.getElementById("nome").value = "";
+        document.getElementById("quantidade").value = "";
+        document.getElementById("valor").value = "";
+    }
 });
